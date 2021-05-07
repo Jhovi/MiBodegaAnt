@@ -24,7 +24,7 @@ export const Login = () => {
     const onFinish = values => {
 
         const data = {
-            correo: values.username,
+            correo: values.correo,
             password: values.password
         }
 
@@ -32,7 +32,7 @@ export const Login = () => {
             res => {
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('id', res.data.id)
-                console.log("Se logeo mano xd")
+                console.log("Logeado correctamente")
                 variables.loggedIn = true;
             }
         ).catch(
@@ -59,12 +59,12 @@ export const Login = () => {
             onFinishFailed={onFinishFailed}
         >
             <Form.Item
-                label="Username"
-                name="username"
+                label="Correo"
+                name="correo"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Ingrese su correo!',
                     },
                 ]}
             >
@@ -77,7 +77,7 @@ export const Login = () => {
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your password!',
+                        message: 'Ingrese contraseña!',
                     },
                 ]}
             >
