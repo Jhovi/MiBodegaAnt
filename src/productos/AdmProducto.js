@@ -1,7 +1,6 @@
 import React from 'react';
 import Axios from "axios";
 import { Table, Modal, Button, Input, Form, Checkbox, TreeSelect } from 'antd';
-import { DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Label, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 
 const { useState, useEffect } = React;

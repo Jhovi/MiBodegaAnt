@@ -33,6 +33,7 @@ export const SaveUsuario = () => {
 
     const fechaChange = (date, dateString) => {
         setFechaSelected(dateString);
+        console.log(dateString)
     }
 
     const onChange = e => {

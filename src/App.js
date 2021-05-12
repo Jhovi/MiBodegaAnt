@@ -6,6 +6,7 @@ import { Nav } from './general/Nav';
 import { AdmUsuario } from './usuarios/AdmUsuario';
 import { SaveUsuario } from './usuarios/SaveUsuario';
 import { AdmProducto } from './productos/AdmProducto';
+import { EditUsuario } from './usuarios/EditUsuario';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/adm-usuarios" component={() => <AdmUsuario/>} />
           <Route exact path="/save-usuario" component={() => <SaveUsuario/>} />
           <Route exact path="/adm-producto" component={() => <AdmProducto/>} />
+          <Route exact path="/edit-usuario/:id" component={() => <EditUsuario/>} />
         </Switch>
         </div>
       </div>
