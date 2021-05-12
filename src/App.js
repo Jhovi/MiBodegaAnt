@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Nav } from './general/Nav';
 import { AdmUsuario } from './usuarios/AdmUsuario';
 import { SaveUsuario } from './usuarios/SaveUsuario';
+import { AdmProducto } from './productos/AdmProducto';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/login" component={() => <Login/>} />
           <Route exact path="/adm-usuarios" component={() => <AdmUsuario/>} />
           <Route exact path="/save-usuario" component={() => <SaveUsuario/>} />
+          <Route exact path="/adm-producto" component={() => <AdmProducto/>} />
         </Switch>
         </div>
       </div>

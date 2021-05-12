@@ -21,7 +21,7 @@ export const Nav = () => {
                     <Menu.Item key="registrarUsuario">Registrar usuario</Menu.Item>
                 </SubMenu>
                 <SubMenu key="subMenuProducto" icon={<SettingOutlined />} title="Productos">
-                    <Menu.Item key="listarProductos">Listar productos</Menu.Item>
+                    <Menu.Item onClick={handleClick} key="listarProductos" ><Link to={'/adm-producto'} className="nav-link">Listar productos</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="subMenuBoleta" icon={<SettingOutlined />} title="Boletas">
                     <Menu.Item key="listarBoletas">Listar boletas</Menu.Item>
