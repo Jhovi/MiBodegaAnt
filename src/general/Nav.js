@@ -24,7 +24,7 @@ export const Nav = () => {
                     <Menu.Item onClick={handleClick} key="listarProductos" ><Link to={'/adm-producto'} className="nav-link">Listar productos</Link></Menu.Item>
                 </SubMenu>
                 <SubMenu key="subMenuBoleta" icon={<SettingOutlined />} title="Boletas">
-                    <Menu.Item key="listarBoletas">Listar boletas</Menu.Item>
+                    <Menu.Item onClick={handleClick} key="listarBoletas"><Link to={'/adm-boletas'} className="nav-link">Listar boletas</Link></Menu.Item>
                     <Menu.Item key="registrarBoleta">Registrar boleta</Menu.Item>
                 </SubMenu>
                 <Menu.Item key="estadistica">Estadistica</Menu.Item>
