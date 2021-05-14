@@ -8,6 +8,7 @@ import { SaveUsuario } from './usuarios/SaveUsuario';
 import { AdmProducto } from './productos/AdmProducto';
 import { EditUsuario } from './usuarios/EditUsuario';
 import { AdmBoleta} from './boletas/AdmBoleta';
+import { SaveBoleta} from './boletas/SaveBoleta';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/adm-producto" component={() => <AdmProducto/>} />
           <Route exact path="/edit-usuario/:id" component={() => <EditUsuario/>} />
           <Route exact path="/adm-boletas" component={() => <AdmBoleta/>} />
+          <Route exact path="/save-boleta" component={() => <SaveBoleta/>} />
         </Switch>
         </div>
       </div>
