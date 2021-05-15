@@ -9,6 +9,7 @@ import { AdmProducto } from './productos/AdmProducto';
 import { EditUsuario } from './usuarios/EditUsuario';
 import { AdmBoleta} from './boletas/AdmBoleta';
 import { SaveBoleta} from './boletas/SaveBoleta';
+import { Charts } from './general/Charts';
 
 
 function App() {
@@ -18,13 +19,14 @@ function App() {
         <Nav />
         <div className="auth-wrapper">
         <Switch>
-          <Route exact path="/login" component={() => <Login/>} />
+          <Route exact path="/" component={() => <Login/>} />
           <Route exact path="/adm-usuarios" component={() => <AdmUsuario/>} />
           <Route exact path="/save-usuario" component={() => <SaveUsuario/>} />
           <Route exact path="/adm-producto" component={() => <AdmProducto/>} />
           <Route exact path="/edit-usuario/:id" component={() => <EditUsuario/>} />
           <Route exact path="/adm-boletas" component={() => <AdmBoleta/>} />
           <Route exact path="/save-boleta" component={() => <SaveBoleta/>} />
+          <Route exact path="/metrics" component={() => <Charts/>} />
         </Switch>
         </div>
       </div>

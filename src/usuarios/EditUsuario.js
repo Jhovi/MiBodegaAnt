@@ -114,10 +114,6 @@ export const EditUsuario = () => {
         <div >
             <h1 style={{ marginLeft: '30rem' }}>Editar usuario</h1>
 
-            <Button style={{ marginBottom: '1.5rem', marginLeft: '30rem' }} onClick={saveUsuario} type="primary" htmlType="submit">
-                Guardar
-        </Button>
-
             <div style={{ marginLeft: '18.8rem', marginBottom: '1rem' }} >
                 <label style={{ marginRight: '0.8rem' }} required >Genero:</label>
                 <Radio.Group onChange={onChange}  value={value}>
@@ -219,8 +215,8 @@ export const EditUsuario = () => {
 
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
+                    <Button type="primary" htmlType="submit" id="btn-guardar">
+                        Guardar
     </Button>
                 </Form.Item>
             </Form>

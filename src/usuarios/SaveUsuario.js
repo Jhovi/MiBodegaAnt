@@ -27,7 +27,7 @@ const tailLayout = {
 const dateFormatList = 'MM/DD/YYYY';
 
 export const SaveUsuario = () => {
-
+    const history = useHistory();
     const [value, setValue] = React.useState();
     const [fechaSelected, setFechaSelected] = React.useState(null);
 
@@ -57,7 +57,7 @@ export const SaveUsuario = () => {
 
             Axios.post('Usuario/register', data).then(
                 res => {
-                    console.log(res);
+                    history.push("/adm-usuarios");
                 }
             ).catch(
                 err => {
@@ -87,9 +87,9 @@ export const SaveUsuario = () => {
                 <div style={{ marginLeft: '18.8rem', marginBottom: '1rem' }} >
                     <label style={{ marginRight: '0.8rem' }} required >Genero:</label>
                     <Radio.Group onChange={onChange} value={value}>
-                        <Radio value={0}>Masculino</Radio>
-                        <Radio value={1}>Femenino</Radio>
-                        <Radio value={2}>Incognito</Radio>
+                        <Radio id="option-1" value={0}>Masculino</Radio>
+                        <Radio id="option-2" value={1}>Femenino</Radio>
+                        <Radio id="option-3" value={2}>Incognito</Radio>
                     </Radio.Group>
                 </div>
                 <Form.Item
@@ -119,7 +119,7 @@ export const SaveUsuario = () => {
                 </Form.Item>
 
                 <Form.Item  label="Fecha Nacimiento">
-                    <DatePicker onChange={fechaChange} format={dateFormatList} />
+                    <DatePicker id="fechaNacimiento" onChange={fechaChange} format={dateFormatList} />
                 </Form.Item>
 
                 <Form.Item
@@ -190,8 +190,8 @@ export const SaveUsuario = () => {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
+                    <Button type="primary" htmlType="submit" id="btn-guardar">
+                        Guardar
     </Button>
                 </Form.Item>
             </Form>

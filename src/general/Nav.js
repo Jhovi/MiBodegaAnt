@@ -27,7 +27,7 @@ export const Nav = () => {
                     <Menu.Item onClick={handleClick} key="listarBoletas"><Link to={'/adm-boletas'} className="nav-link">Listar boletas</Link></Menu.Item>
                     <Menu.Item key="registrarBoleta">Registrar boleta</Menu.Item>
                 </SubMenu>
-                <Menu.Item key="estadistica">Estadistica</Menu.Item>
+                <Menu.Item key="estadistica"><Link to={'/metrics'} className="nav-link">Estadistica</Link></Menu.Item>
         </Menu>
 
     )

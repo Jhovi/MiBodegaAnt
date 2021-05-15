@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Dropdown, Menu, message, Upload } from '
 import Axios from "axios";
 import { Table, Tag, Space } from 'antd';
 import { useHistory } from "react-router-dom";
-import { DownOutlined, UserOutlined, UploadOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined, UploadOutlined,FilePdfOutlined, FileExcelOutlined } from '@ant-design/icons';
 
 const { useState, useEffect } = React;
 
@@ -54,7 +54,7 @@ export const AdmUsuario = () => {
             key: 'action',
             dataIndex: 'id',
             render: (id) => (
-                <Button onClick={() => { redirectToEditUsuario(id) }} type="primary" >
+                <Button onClick={() => { redirectToEditUsuario(id) }} type="primary">
                     Editar
                 </Button>
             ),
@@ -85,10 +85,10 @@ export const AdmUsuario = () => {
 
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
+            <Menu.Item id="btn-exportar-pdf" key="1" icon={<FilePdfOutlined />}>
                 Exportar PDF
           </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
+            <Menu.Item id="btn-exportar-excel" key="2" icon={<FileExcelOutlined />}>
                 Exportar Excel
           </Menu.Item>
         </Menu>
@@ -198,18 +198,18 @@ export const AdmUsuario = () => {
         <div style={{ margin: 'auto' }}>
             <h1>Listado de usuarios</h1>
 
-            <Button style={{ marginBottom: '1.5rem' }} onClick={redirectToSaveUsuario} type="primary" htmlType="submit">
+            <Button style={{ marginBottom: '1.5rem' }} onClick={redirectToSaveUsuario} type="primary" htmlType="submit" id="btn-registrar" >
                 Registrar usuario
         </Button>
 
             <Dropdown overlay={menu}>
-                <Button style={{ marginLeft: '2rem', marginRight: '2rem' }} >
+                <Button style={{ marginLeft: '2rem', marginRight: '2rem' }} id="btn-exportar" >
                     Exportar <DownOutlined />
                 </Button>
             </Dropdown>
 
-            <Upload showUploadList={false}  {...props}>
-                <Button icon={<UploadOutlined />}>Cargar archivos</Button>
+            <Upload showUploadList={false}  {...props} id="upload-container">
+                <Button id="btn-upload" icon={<UploadOutlined />}>Cargar archivos</Button>
             </Upload>
 
 

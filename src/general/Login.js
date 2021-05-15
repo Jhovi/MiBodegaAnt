@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const layout = {
     labelCol: {
@@ -21,6 +22,8 @@ const variables = {
     loggedIn: false
 }
 export const Login = () => {
+    
+    const history = useHistory();
     const onFinish = values => {
 
         const data = {
@@ -34,6 +37,7 @@ export const Login = () => {
                 localStorage.setItem('id', res.data.id)
                 console.log("Logeado correctamente")
                 variables.loggedIn = true;
+                history.push("/adm-usuarios");
             }
         ).catch(
             err => {
@@ -85,8 +89,8 @@ export const Login = () => {
             </Form.Item>
 
             <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                    Submit
+                <Button name="btn-ingresar" type="primary" htmlType="submit">
+                    Ingresar
         </Button>
             </Form.Item>
         </Form>
