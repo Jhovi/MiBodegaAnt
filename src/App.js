@@ -10,6 +10,7 @@ import { EditUsuario } from './usuarios/EditUsuario';
 import { AdmBoleta} from './boletas/AdmBoleta';
 import { SaveBoleta} from './boletas/SaveBoleta';
 import { Charts } from './general/Charts';
+import AdmTableros from './tableros/adm-tableros.component';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route exact path="/edit-usuario/:id" component={() => <EditUsuario/>} />
           <Route exact path="/adm-boletas" component={() => <AdmBoleta/>} />
           <Route exact path="/save-boleta" component={() => <SaveBoleta/>} />
-          <Route exact path="/metrics" component={() => <Charts/>} />
+          <Route exact path="/metrics" component={AdmTableros} />
         </Switch>
         </div>
       </div>

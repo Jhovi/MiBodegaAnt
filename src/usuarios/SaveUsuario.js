@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio } from 'antd';
+import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, message } from 'antd';
 import Axios from "axios";
 import { Table, Tag, Space } from 'antd';
 import { useHistory } from "react-router-dom";
@@ -57,10 +57,12 @@ export const SaveUsuario = () => {
 
             Axios.post('Usuario/register', data).then(
                 res => {
+                    message.success('Creacion con exito');
                     history.push("/adm-usuarios");
                 }
             ).catch(
                 err => {
+                    message.error('Datos incorrectos');
                     console.log(err)
                 }
             )
@@ -74,7 +76,7 @@ export const SaveUsuario = () => {
 
     return (
         <div>
-            <h1 style={{ marginLeft: '18.8rem' }}>Registrar Usuario</h1>
+            <h1 style={{ marginLeft: '30rem' }}>Registrar Usuario</h1>
             <Form
                 {...layout}
                 name="basic"
@@ -84,7 +86,7 @@ export const SaveUsuario = () => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                <div style={{ marginLeft: '18.8rem', marginBottom: '1rem' }} >
+                <div style={{ marginLeft: '26rem', marginBottom: '1rem' }} >
                     <label style={{ marginRight: '0.8rem' }} required >Genero:</label>
                     <Radio.Group onChange={onChange} value={value}>
                         <Radio id="option-1" value={0}>Masculino</Radio>

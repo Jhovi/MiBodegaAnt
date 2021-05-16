@@ -17,7 +17,7 @@ export const Nav = () => {
 
         <Menu mode="horizontal" >
                 <SubMenu key="subMenuUsuario" style={{ marginLeft: '23rem' }} icon={<SettingOutlined />} title="Usuarios">
-                    <Menu.Item onClick={handleClick} key="listarUsuarios" ><Link to={'/adm-usuarios'} className="nav-link">Usuarios</Link></Menu.Item>
+                    <Menu.Item onClick={handleClick} key="listarUsuarios" ><Link to={'/adm-usuarios'} className="nav-link">Listar Usuarios</Link></Menu.Item>
                     <Menu.Item key="registrarUsuario">Registrar usuario</Menu.Item>
                 </SubMenu>
                 <SubMenu key="subMenuProducto" icon={<SettingOutlined />} title="Productos">

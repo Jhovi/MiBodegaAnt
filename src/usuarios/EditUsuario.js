@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, DatePicker, Radio } from 'antd';
+import { Form, Input, Button, Checkbox, DatePicker, Radio, message } from 'antd';
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
@@ -96,10 +96,12 @@ export const EditUsuario = () => {
 
         Axios.put('Usuario', data).then(
             res => {
+                message.success('Actualizacion con exito');
                 history.push("/adm-usuarios");
             }
         ).catch(
             err => {
+                message.error('Datos incorrectos');
                 console.log(err)
             }
         )
@@ -114,7 +116,7 @@ export const EditUsuario = () => {
         <div >
             <h1 style={{ marginLeft: '30rem' }}>Editar usuario</h1>
 
-            <div style={{ marginLeft: '18.8rem', marginBottom: '1rem' }} >
+            <div style={{ marginLeft: '26rem', marginBottom: '1rem' }} >
                 <label style={{ marginRight: '0.8rem' }} required >Genero:</label>
                 <Radio.Group onChange={onChange}  value={value}>
                     <Radio value={0}>Masculino</Radio>
