@@ -8,7 +8,8 @@ import { SaveUsuario } from './usuarios/SaveUsuario';
 import { AdmProducto } from './productos/AdmProducto';
 import { EditUsuario } from './usuarios/EditUsuario';
 import { AdmBoleta} from './boletas/AdmBoleta';
-import { SaveBoleta} from './boletas/SaveBoleta';
+import SaveBoletas from './boletas/save-boletas.component';
+import EditBoletas from './boletas/edit-boletas.component';
 import { Charts } from './general/Charts';
 import AdmTableros from './tableros/adm-tableros.component';
 
@@ -26,7 +27,8 @@ function App() {
           <Route exact path="/adm-producto" component={() => <AdmProducto/>} />
           <Route exact path="/edit-usuario/:id" component={() => <EditUsuario/>} />
           <Route exact path="/adm-boletas" component={() => <AdmBoleta/>} />
-          <Route exact path="/save-boleta" component={() => <SaveBoleta/>} />
+          <Route exact path="/save-boleta" component={SaveBoletas} />
+          <Route exact path="/edit-boleta/:id" component={EditBoletas} />
           <Route exact path="/metrics" component={AdmTableros} />
         </Switch>
         </div>
