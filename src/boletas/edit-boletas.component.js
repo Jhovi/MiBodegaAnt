@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Redirect } from "react-router-dom";
 import '../App.css';
 import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, Modal, Table } from 'antd';
-
+import moment from "moment";
 
 //ESTILOS PARA FORMULARIOS
 const layout = {
@@ -16,7 +16,6 @@ const layout = {
         span: 10,
     },
 };
-
 
 const columns = [
     {
@@ -42,51 +41,53 @@ const columns = [
     },
 ];
 
-const columns_add_productos = [
-    {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Producto',
-        dataIndex: 'nombre',
-        key: 'nombre',
-    },
-    {
-        title: 'Precio',
-        dataIndex: 'precio',
-        key: 'precio',
-    },
-    {
-        title: 'Stock',
-        dataIndex: 'stock',
-        key: 'stock',
-    },
-];
-
+var boleta = [];
+var hora_modificada = '';
 const dateFormatList = 'MM/DD/YYYY';
-var fecha = '';
-var test = [];
-
 export default class EditBoleta extends Component {
-    
+
+
     state = {
-        subtotales: [],
-        detalleproducto: [],
+        listaproductos: [], // tendra los productos de la boleta que se ha traido.   
         IsModalVisible: false,
-        ModalVisible: false,              
+        selectedusuario: []       
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.miboleta = this.props.location.state.boleta.detalleBoleta
+        this.misproductos = this.props.location.state.productos  
+        this.direccion = this.props.location.state.boleta.direccion      
     }
 
     formRef = React.createRef();
 
     getData = (id) => {
-        Axios.get('Boleta/'+ id).then(
+        Axios.get('Boleta/' + id).then(
             res => {
                 this.setState({
-                    boleta: res.data
-                })
-                
+                    boleta: res.data,
+                    fecha: res.data.fecha                    
+                })               
+                Axios.get('Usuario/' + this.state.boleta.usuarioId).then(
+                    usuario => {
+                        this.setState({
+                            boleta_usuario: usuario.data,
+                            selectedusuario: usuario.data.id                         
+                        })
+                        
+                        this.formRef.current.setFieldsValue({
+                            nombre_usuario: this.state.boleta_usuario.nombre + " " + this.state.boleta_usuario.apellido,
+                            fecha_boleta: moment(this.state.boleta.fecha),
+                            direccion: this.state.boleta.direccion,
+                        })
+                    },
+                    err => {
+                        console.log(err);
+                    }
+                )
+
             }
         ).catch(
             err => {
@@ -94,52 +95,13 @@ export default class EditBoleta extends Component {
             }
         )
     }
-    
 
-    componentDidMount = () => {           
+    componentDidMount = () => {
         const url = window.location.href.split('/');
         const id = url[url.length - 1]
-        this.getData(id);        
-        
-        //console.log(this.state.boleta.UsuarioId)
-        
-        
-    }
+        this.getData(id);
+        var test = []
 
-
-
-    onFinish = () => {
-
-        
-        const data = {
-            UsuarioId: this.state.selectedusuario,
-            Fecha: fecha,
-            Direccion: this.direccion,
-            DetalleBoleta: this.state.detalleproducto            
-        }
-
-        Axios.post('Boleta', data).then(
-            res => {
-                this.setState({ goBackToAdmProducto: true })
-            }
-        ).catch(
-            err => {
-                console.log(err)
-            }
-        )                  
-    };
-
-    onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-    };
-
-    showModal = () => {
-        console.log(this.state.boleta)
-
-        this.setState({
-            fecha: test
-        })
-        
         Axios.get('Usuario').then(
             res => {
                 this.setUsers(res.data)
@@ -148,10 +110,18 @@ export default class EditBoleta extends Component {
                 console.log(err);
             }
         )
+
+        this.props.location.state.boleta.detalleBoleta.forEach(element => {
+            test.push({
+                id: element.id, ProductoId: element.productoId, Cantidad: element.cantidad
+            })
+        });
+        boleta = this.props.location.state.boleta;
+
         this.setState({
-            IsModalVisible: true
+            listaproductos: test// aqui le estoy pasando el arreglo que contiene productid y la cantidad 
         })
-    };
+    }
 
     setUsers = users => {
         this.setState({
@@ -159,16 +129,36 @@ export default class EditBoleta extends Component {
         })
     }
 
-    onChange(date, dateString) {
-        fecha = dateString
+    showModal = () => {
+       
 
+        this.setState({
+            IsModalVisible: true
+        })
+    };
+
+    onChange(date, dateString) {
+        hora_modificada = dateString
+        
     }
 
-    mostrarModal = () => {
+    onFinish = () => {     
+
+        if (hora_modificada == ""){
+            hora_modificada = moment(this.state.fecha).format('MM/DD/YYYY')
+        }                
+    
+        const data = {
+            id: this.state.boleta.id,
+            fecha: hora_modificada,
+            UsuarioId: this.state.selectedusuario,
+            Direccion: this.direccion,
+            DetalleBoleta: this.state.listaproductos
+        }
         
-        Axios.get('Producto/').then(
+        Axios.put('Boleta', data).then(
             res => {
-                this.setProducts(res.data);
+                this.setState({ goBackToAdmBoleta: true })
             }
         ).catch(
             err => {
@@ -176,57 +166,63 @@ export default class EditBoleta extends Component {
             }
         )
 
-        this.setState({
-            ModalVisible: true
-        })
+        
+        
 
+        
     };
 
-    setProducts = products => {
+    findproduct = id => {
 
-        this.setState({
-            products: products
+        var producto;
+
+        this.misproductos.map(element => {
+            if (element.id == id) {
+                producto = element;
+            }
         })
-    }
 
-    agregarcantidad(cantidad, producto, indice) {
-        var idproducto = producto.id
-        var detalle = { ProductoId: idproducto, Cantidad: cantidad }
-
-        var index = this.state.detalleproducto.findIndex((value) => {
-            return value.ProductoId == producto.id
-        })
-        var det = this.state.detalleproducto
-
-        if (index == -1) {
-            det.push(detalle)
-        }
-        else {
-            det[index].Cantidad = cantidad
-        }
-
-        var test = this.state.subtotales
-        test[indice] = cantidad * producto.precio
-        this.setState({
-            subtotales: test,
-            detalleproducto: det
-        })
-        console.log(this.state.detalleproducto)
+        return producto;
 
     }
 
+    agregarcantidad(cantidad, producto) {
+        var idproducto = producto.id;
+
+        var temp = this.state.listaproductos;
+
+        var index = this.state.listaproductos.findIndex((value) => {
+            return value.ProductoId == idproducto
+        })
+        if (index != -1)
+            temp[index].Cantidad = parseInt(cantidad)
 
 
+        var test = this.miboleta;
+
+        test.map(element => {
+
+            if (element.productoId == producto.id) {
+                element.cantidad = cantidad;
+                element.subtotal = cantidad * producto.precio
+            }
+
+        })
+        this.setState({
+            miboleta: test,
+            listaproductos: temp
+        })
+    }
 
     render() {
-    
-        if (this.state.goBackToAdmProducto) {
+
+        if (this.state.goBackToAdmBoleta) {
             return <Redirect to={'/adm-boletas'} />
         }
 
         return (
             <div>
-                <h1 style={{ marginLeft: '18.8rem' }}>Registrar Boleta</h1>
+                <h1 style={{ marginLeft: '18.8rem' }}>Editar Boleta</h1>
                 <Form
                     {...layout}
                     name="basic"
@@ -278,7 +274,7 @@ export default class EditBoleta extends Component {
 
                     </Modal>
 
-                    <Form.Item label="Fecha">
+                    <Form.Item label="Fecha" name="fecha_boleta">
                         <DatePicker onChange={this.onChange} format={dateFormatList} />
                     </Form.Item>
 
@@ -298,31 +294,10 @@ export default class EditBoleta extends Component {
                     <Form.Item
                         label="Detalles producto"
                     >
-                        <Button id="add-products" type="primary" onClick={this.mostrarModal} >
+                        <Button id="add-products" type="primary">
                             Agregar
                     </Button>
-                    </Form.Item>
-
-                    <Modal title="Escoja el producto" visible={this.state.ModalVisible} footer={[]}>
-                        <div >
-                            <Table
-                                style={{ width: 1200 }}
-                                dataSource={this.state.products}
-                                columns={columns_add_productos}
-                                onRow={(r) => ({
-                                    onClick: () => {
-                                        test.push(r)
-
-                                        this.setState({
-                                            ModalVisible: false,
-                                            Saveproducts: test
-                                        })
-                                        console.log(this.state.Saveproducts)
-
-                                    }
-                                })} />
-                        </div>
-                    </Modal>
+                    </Form.Item>                    
                 </Form>
                 <table style={{ marginLeft: '500px', width: '40%', textAlign: 'left', background: '#fff' }}>
                     <thead>
@@ -334,19 +309,22 @@ export default class EditBoleta extends Component {
                         </tr>
                     </thead>
                     <tbody style={{ background: 'white' }}>
-                        {this.state.Saveproducts && this.state.Saveproducts.map((product, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{product.nombre}</td>
-                                    <td><input type="number" className="form-control" onChange={e => this.agregarcantidad(e.target.value, product, index)} placeholder="Cantidad" /></td>
-                                    <td>{product.precio}</td>
-                                    <td>{this.state.subtotales[index]}</td>
-                                </tr>
-                            )
-                        })}
+                        {
+                            this.miboleta.map((element, index) => {
+                                return (
+                                    <tr>
+                                        <td>{this.findproduct(element.productoId).nombre}</td>
+                                        <td><input type="number" className="form-control" placeholder="Cantidad"  onChange={e => this.agregarcantidad(e.target.value, this.findproduct(element.productoId))} defaultValue={element.cantidad}/></td>
+                                        <td>{this.findproduct(element.productoId).precio}</td>
+                                        <td>{element.subtotal}</td>
+                                    </tr>
+                                )
+
+                            })
+                        }
                     </tbody>
                 </table>
-                <Button type="primary" onClick= {this.onFinish} style={{ marginLeft: '1130px', marginTop: '30px'}}>
+                <Button type="primary"  onClick= {this.onFinish} style={{ marginLeft: '1130px', marginTop: '30px' }}>
                     Registrar boleta
                 </Button>
             </div>

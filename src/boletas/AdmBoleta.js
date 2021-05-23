@@ -12,6 +12,8 @@ const { useState, useEffect } = React;
 export const AdmBoleta = () => {
 
     const history = useHistory();
+    const [test, settest] = useState([]);
+    const [producto, setProducto] = useState([]);
 
     useEffect(() => {
         getData();
@@ -41,10 +43,9 @@ export const AdmBoleta = () => {
         },
         {
             title: 'Action',
-            key: 'action',
-            dataIndex: 'id',
-            render: (id) => (
-                <Button onClick={() => { redirectToEditBoleta(id) }} type="primary" >
+            key: 'action',            
+            render: (boleta) => (
+                <Button onClick={() => { redirectToEditBoleta(boleta) }} type="primary" >
                     Editar
                 </Button>
             ),
@@ -61,6 +62,16 @@ export const AdmBoleta = () => {
                 console.log(err)
             }
         )
+
+        Axios.get('Producto').then(
+            res => {
+                setProducto(res.data)
+
+            },
+            err => {
+                console.log(err);
+            }
+        )     
     }
 
     const redirectToSaveBoleta = () => {
@@ -68,8 +79,14 @@ export const AdmBoleta = () => {
     };
 
 
-    const redirectToEditBoleta = (id) => {
-        history.push("/edit-boleta/" + id);
+    const redirectToEditBoleta = (boleta) => {
+       
+        settest(boleta)        
+        history.push({ 
+            pathname: '/edit-boleta/'+boleta.id,
+            state:{ boleta: boleta, productos: producto}
+            
+           });
     }
 
     return (
