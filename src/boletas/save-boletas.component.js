@@ -4,7 +4,7 @@ import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Redirect } from "react-router-dom";
 import '../App.css';
-import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, Modal, Table } from 'antd';
+import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, Modal, Table, message } from 'antd';
 
 //ESTILOS PARA FORMULARIOS
 const layout = {
@@ -93,10 +93,12 @@ export default class SaveBoleta extends Component {
 
         Axios.post('Boleta', data).then(
             res => {
+                message.success('Creacion con éxito');
                 this.setState({ goBackToAdmProducto: true })
             }
         ).catch(
             err => {
+                message.error('Error al guardar');
                 console.log(err)
             }
         )                 

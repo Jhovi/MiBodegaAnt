@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -41,6 +41,7 @@ export const Login = () => {
             }
         ).catch(
             err => {
+                message.error('Usuario o contraseña incorrectas');
                 console.log(err)
             }
         )

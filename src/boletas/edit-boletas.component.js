@@ -4,7 +4,7 @@ import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Redirect } from "react-router-dom";
 import '../App.css';
-import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, Modal, Table } from 'antd';
+import { Form, Input, Button, Checkbox, DatePicker, InputNumber, Radio, Modal, Table, message } from 'antd';
 import moment from "moment";
 
 //ESTILOS PARA FORMULARIOS
@@ -158,6 +158,7 @@ export default class EditBoleta extends Component {
         
         Axios.put('Boleta', data).then(
             res => {
+                message.success('Actualizacion con éxito');
                 this.setState({ goBackToAdmBoleta: true })
             }
         ).catch(

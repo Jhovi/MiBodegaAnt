@@ -159,7 +159,7 @@ export const AdmUsuario = () => {
                                         getData();
                                     },
                                     err => {
-                                        message.error('Se presento un error, intentelo luego');
+                                        message.error('Problemas al leer el archivo');
                                     }
                                 )
                             }
@@ -176,13 +176,13 @@ export const AdmUsuario = () => {
                                         getData();
                                     },
                                     err => {
-                                        message.error('Se presento un error, intentelo luego');
+                                        message.error('Problemas al leer el archivo');
                                     }
                                 )
                             }
                         )
                     } else {
-                        message.error('Archivo invalido');
+                        message.error('Problemas al leer el archivo');
                     }
 
                 })
